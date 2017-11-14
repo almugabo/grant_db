@@ -1,0 +1,13 @@
+### dataset to download 
+
+### australian research council 
+
+    dset_arc = ['http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/NCGP_Projects_and_fellowship_new_and_ongoing.xlsx', 
+     'http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/ARC_NCGP_FoR_new_and_ongoing.xlsx', 
+     'http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/ARC_NCGP_Keywords_new_and_ongoing_Feb2015.xlsx', 
+     'http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/ARC_NCGP_Keywords_new_and_ongoing_Feb2015.xlsx,
+     'http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/ARC_NCGP_Field-of-Research_completed.xlsx', 
+     'http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/ARC_NCGP_Keywords_completed_Feb2015.xlsx', 
+     'http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/ARC_NCGP_PartnerOrgs.xlsx', 
+     'http://www.arc.gov.au/sites/default/files/filedepot/Public/ARC/NCGP_dataset/SuccessRates_by_FoR.xlsx'
+    ] 
