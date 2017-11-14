@@ -85,3 +85,15 @@ For now, it is foreseen to include data of those research funding agencies/progr
 		* Worldwide Cancer Research
 
 
+#### Funding agencies with grant database online but without API or downloabledatasets 
+
+**1. ANR**
+
+http://www.agence-nationale-recherche.fr/en/projects-and-results/your-request/?q=*
+
+**2. DFG**
+
+http://gepris.dfg.de/
+
+
+
