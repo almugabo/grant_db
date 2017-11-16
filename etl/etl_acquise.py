@@ -30,7 +30,7 @@ def download_file(x_url, x_filename_local):
             if chunk:  # filter out keep-alive new chunks
                 f.write(chunk)
                 f.flush()
-    return x_filename_local
+    # return x_filename_local
 
 
 def gtr_project_data(x_destination_folder):
