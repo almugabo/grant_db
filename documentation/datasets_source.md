@@ -37,9 +37,10 @@ For now, it is foreseen to include data of those research funding agencies/progr
 
 #### 6. [European Union Funding - Research Framework Programme]( http://cordis.europa.eu/home_en.html) 
 
-	source of the dataset: 
+	source of the dataset (Open data Portal)
 
-	https://data.europa.eu/euodp/en/home
+
+[https://data.europa.eu/euodp/en/home](https://data.europa.eu/euodp/en/home)
 
 #### 7. [Research Councils UK (RCUK)]( http://cordis.europa.eu/home_en.html) 
 
