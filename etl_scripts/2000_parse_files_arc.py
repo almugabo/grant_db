@@ -5,8 +5,6 @@
 #  AUSTRALIAN RESEARCH COUNCIL
 
 
-
-
 import pandas as pd 
 import os
 
@@ -15,13 +13,12 @@ import os
 #Set paths
 
 xFld_Path_parsed = '/media/mike/SSD_Data/__data_staging/1000_grant_db/2000_dset_parsed/'
-
 xDB = xFld_Path_parsed + 'grant_data_parsed.db'
 xDBCon = 'sqlite:///' + xDB
 
-
 xFld_Path_dset_original = '/media/mike/SSD_Data/__data_staging/1000_grant_db/1000_dset_original/'
 xFld_Path_arc = xFld_Path_dset_original + '1000_ARC/'
+
 
 
 # -- completed - projects
