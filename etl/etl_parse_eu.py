@@ -4,16 +4,6 @@ see datasets_source for more information on the datasets
 '''
 
 import xmltodict
-import zipfile
-
-def eu_zipped_file(x_zip_file):
-    '''
-    open ziped file and read each file included
-    '''
-    with zipfile.ZipFile(x_zip_file, "r") as f:
-        for x_file_name in f.namelist():
-            x_data_read = f.read(x_file_name)
-            yield x_data_read
 
 
 xFields_project_fp7 = ['source', 'language', 'rcn', 'reference', 'acronym', 'teaser', 'title', 'objective', 'totalCost',
