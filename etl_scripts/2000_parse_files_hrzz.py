@@ -12,21 +12,22 @@
 
 import pandas as pd 
 import os
-
+import sys
+import time
+from sqlalchemy import create_engine
 
 # In[4]:
 
-xFld_Path_parsed = '/media/mike/SSD_Data/__data_staging/1000_grant_db/2000_dset_parsed/'
 
-xDB = xFld_Path_parsed + 'grant_data_parsed.db'
-xDBCon = 'sqlite:///' + xDB
+xPGConnString = 'postgresql://postgres:post@localhost:5432/x_eris'
+xDBCon = create_engine(xPGConnString)
 
 
 # # Croatian Science Foundation
 
 # In[22]:
 
-xFld_Path_dset_original = '/media/mike/SSD_Data/__data_staging/1000_grant_db/1000_dset_original/'
+xFld_Path_dset_original = '/media/mike/MyDataContainer/1000_ScientoMetricData/___Staging/1000_GRANTS/1000_dset_original/'
 xFld_Path_set = xFld_Path_dset_original + '3000_HRZZ/'
 
 os.listdir(xFld_Path_set)
@@ -42,8 +43,12 @@ x_df1.to_sql(name = 'hrrzz_projects',
              con = xDBCon, 
              if_exists='replace', 
              index=True, 
-             index_label='record_id')
-print 'OK--projects'
+             index_label='record_id',
+             schema='data_staging')
+
+print 'OK--HRZZ projects saved', len(x_df1)
+
+
 
 
 # In[25]:
