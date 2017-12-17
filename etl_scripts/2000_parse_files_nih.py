@@ -1,63 +1,56 @@
-
 # coding: utf-8
 
-# # Parse files from NIH
-# ### for now only 2006 to 2016
+# # Testing parsing of various datasets
+
+# In[1]:
+
+import time
+import sys
+from sqlalchemy import create_engine
+import zipfile
+import os
+import pandas as pd
+
+# add parse function
+xPath_package = '/home/mike/PycharmProjects/grant_db/'
+sys.path.append(xPath_package)
+
+# connection strings
+# xPGConnString = 'postgresql://postgres:post@localhost:5432/eris'
+# xDBCon = create_engine(xPGConnString)
+
+xDB = '/media/mike/MyDataContainer/1000_ScientoMetricData/___Staging/1000_GRANTS/2000_dset_parsed/grant_dset.db'
+xDBCon = 'sqlite:///' + xDB
+
+xFld = '/media/mike/MyDataContainer/1000_ScientoMetricData/___Staging/1000_GRANTS/1000_dset_original/4000_NIH/_CSV/'
+
+# In[19]:
+
+# IMPORT THE TABLES -- projects
+print '--- starting', time.ctime()
+for x_year in range(2006, 2017):
+    x_year_str = str(x_year)
+    print '-------------------- process: ', x_year_str
+    xFile_Zipped = xFld + x_year_str + '.zip'
+    xFile_nonZipped = 'RePORTER_PRJ_C_FY' + x_year_str + '.csv'
+    xTabName = 'nih_' + x_year_str + 'projects'
+
+    # Process File
+    # df1 = None
+    with zipfile.ZipFile(xFile_Zipped) as z:
+        with z.open(xFile_nonZipped) as f:
+            df1 = pd.read_csv(f, low_memory=False)
+            # print len(df1)
+
+            df1.to_sql(name=xTabName,
+                       con=xDBCon,
+                       if_exists='replace',
+                       index=True, index_label='record_id',
+                       chunksize=10000)
+
+            print 'saved ! records:', len(df1), time.ctime()
+
+print '--------all done---', time.ctime()
 
 
-# data already in csv and relatively large for pandas
-# we will use direct read in the postgres
-
-# for every year, we will create two tables
-# (1) projects and (2) abstracts
-
-create table nih_projects
-(APPLICATION_ID              int64
-ACTIVITY                   object
-ADMINISTERING_IC           object
-APPLICATION_TYPE            int64
-ARRA_FUNDED               float64
-AWARD_NOTICE_DATE          object
-BUDGET_START               object
-BUDGET_END                 object
-CFDA_CODE                 float64
-CORE_PROJECT_NUM           object
-ED_INST_TYPE               object
-FOA_NUMBER                 object
-FULL_PROJECT_NUM           object
-FUNDING_ICs                object
-FY                          int64
-IC_NAME                    object
-NIH_SPENDING_CATS         float64
-ORG_CITY                   object
-ORG_COUNTRY                object
-ORG_DEPT                   object
-ORG_DISTRICT              float64
-ORG_DUNS                  float64
-ORG_FIPS                   object
-ORG_NAME                   object
-ORG_STATE                  object
-ORG_ZIPCODE               float64
-PHR                       float64
-PI_IDS                     object
-PI_NAMEs                   object
-PROGRAM_OFFICER_NAME       object
-PROJECT_START              object
-PROJECT_END                object
-PROJECT_TERMS              object
-PROJECT_TITLE              object
-SERIAL_NUMBER               int64
-STUDY_SECTION              object
-STUDY_SECTION_NAME         object
-SUBPROJECT_ID             float64
-SUFFIX                     object
-SUPPORT_YEAR                int64
-TOTAL_COST                float64
-TOTAL_COST_SUB_PROJECT    float64
-
-nih_abstracts
-
-APPLICATION_ID     int64
-ABSTRACT_TEXT     object
-dtype: object
 
