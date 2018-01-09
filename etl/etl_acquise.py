@@ -33,10 +33,66 @@ def download_file(x_url, x_filename_local):
     # return x_filename_local
 
 
-import requests
-import json
-import time
-import datetime
+def grist_getGrantData(xOrg_Id, xDestFolder):
+    '''
+    bulk retrieve data from GRIST API
+
+    :param xOrg_Id:
+    :param xDestFolder:
+    :return:
+    '''
+    def getGrant_Id(x_record):
+        x_grant = x_record['Grant']
+        x_grant_id = x_grant['Id']
+        x_grant_id_org = ((x_grant['FundRefID']).split('/'))[4]
+        return str(x_grant_id_org), str(x_grant_id)
+
+    xUrl_1 = 'http://www.ebi.ac.uk/europepmc/GristAPI/rest/get/query=grant_agency:'
+    xUrl_2 = '&resultType=core&format=json'
+    xUrl_3 = '&page='
+    # first request
+    xPage = 1
+    xUrl = xUrl_1 + xOrg_Id + xUrl_2 + xUrl_3 + str(xPage)
+
+    q1 = requests.get(xUrl)
+    q2 = json.loads(q1.content)
+    if q2['RecordList']:
+        x_records = q2['RecordList']['Record']  # list
+        xrecords_nr = int(q2['HitCount'])
+        # remaining pages
+        xBuckets_nr = int(math.ceil(xrecords_nr / 25.0))
+        xBuckets_pages = [1 + x for x in range(xBuckets_nr)][1:]
+
+        for x_record in x_records:
+            xrec_id = getGrant_Id(x_record)
+            xFileName = xDestFolder + xrec_id[0] + '_' + xrec_id[1] + '.json'
+
+            with open(xFileName, 'w') as f:
+                json.dump(x_record, f)
+
+                # remaining
+            xPage = 1
+    xUrl = xUrl_1 + xOrg_Id + xUrl_2 + xUrl_3 + str(xPage)
+
+    q1 = requests.get(xUrl)
+    q2 = json.loads(q1.content)
+    if q2['RecordList']:
+        x_records = q2['RecordList']['Record']  # list
+        xrecords_nr = int(q2['HitCount'])
+        # remaining pages
+        xBuckets_nr = int(math.ceil(xrecords_nr / 25.0))
+        xBuckets_pages = [1 + x for x in range(xBuckets_nr)][1:]
+
+        for x_record in x_records:
+            xrec_id = getGrant_Id(x_record)
+            xFileName = xDestFolder + xrec_id[0] + '_' + xrec_id[1] + '.json'
+
+            with open(xFileName, 'w') as f:
+                json.dump(x_record, f)
+
+    print 'done'
+
+
 
 
 def gtr_get_data(xDestFolder, entities='projects'):
@@ -111,22 +167,17 @@ def gtr_get_data(xDestFolder, entities='projects'):
     'GTR projects data fetched and saved !'
 
 
-# In[ ]:
 
-
-# In[ ]:
-
-import json
-
+'''
 
 def gtr_parse_projects(xFile):
-    '''
-    parse project data from Gateway to research
-    and return a dictionary with project data and a list of "relatioons"
-    N.B: metadata on relations such as PI, Funding Organisation or Performing Organisation
-    should be fetched separately
-    for example given their IDs
-    '''
+    
+    #parse project data from Gateway to research
+    #and return a dictionary with project data and a list of "relatioons"
+    #N.B: metadata on relations such as PI, Funding Organisation or Performing Organisation
+   # should be fetched separately
+    #for example given their IDs
+    
 
     xDictRes = {}
 
@@ -149,6 +200,8 @@ def gtr_parse_projects(xFile):
                        'researchActivities',
                        'leadOrganisationDepartment'
                        ]
+
+
 
     # links
     xFields_links = ['id', 'href', 'rel']
@@ -206,3 +259,6 @@ def gtr_parse_projects(xFile):
 
 
 return xDictRes
+
+'''
+

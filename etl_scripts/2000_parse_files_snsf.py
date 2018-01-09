@@ -8,7 +8,8 @@
 # each dataset has its own structure and need to processed separately. 
 # 
 
-# In[3]:
+# !!!! DATASETS HAVE STRANGE FORMAT
+# !!!! PARSE LATER
 
 import pandas as pd 
 import os
@@ -19,12 +20,9 @@ from sqlalchemy import create_engine
 
 # In[4]:
 
-#xFld_Path_parsed = '/media/mike/SSD_Data/__data_staging/1000_grant_db/2000_dset_parsed/'
-#xDB = xFld_Path_parsed + 'grant_data_parsed.db'
-#xDBCon = 'sqlite:///' + xDB
-
-xPGConnString = 'postgresql://postgres:post@localhost:5432/x_eris'
-xDBCon = create_engine(xPGConnString)
+xFld_Path_parsed = '/media/mike/SSD_Data/__data_staging/1000_grant_db/2000_dset_parsed/'
+xDB = xFld_Path_parsed + 'grant_data_parsed.db'
+xDBCon = 'sqlite:///' + xDB
 
 # # Swiss national Science foundation
 
@@ -47,14 +45,11 @@ x_df1 = pd.read_csv(xFld_Path_set + 'P3_GrantExport.csv', sep = ';')#, nrows=10)
 print len(x_df1), time.ctime()
 
 
-
-'''
 x_df1.to_sql(name = 'snsf_projects',
              con = xDBCon, 
              if_exists='replace', 
              index=True,
-             index_label='record_id',
-             schema='data_staging')
+             index_label='record_id')
 
 print '--projects, saved', len(x_df1)
 
@@ -64,8 +59,7 @@ x_df1.to_sql(name = 'snsf_projects_abstracts',
              con = xDBCon, 
              if_exists='replace', 
              index=True, 
-             index_label='record_id',
-             schema='data_staging')
+             index_label='record_id')
 
 print '--projects with abstracts'
 
@@ -77,8 +71,7 @@ x_df1.to_sql(name = 'snsf_person',
              con = xDBCon, 
              if_exists='replace', 
              index=True, 
-             index_label='record_id',
-             schema='data_staging')
+             index_label='record_id')
 
 print 'OK--person'
 
@@ -92,8 +85,7 @@ x_df1.to_sql(name = 'snsf_collaborations',
              con = xDBCon, 
              if_exists='replace', 
              index=True, 
-             index_label='record_id',
-             schema='data_staging')
+             index_label='record_id')
 
 print 'OK--collaborations'
 
@@ -107,8 +99,7 @@ x_df1.to_sql(name = 'snsf_grant_output',
              con = xDBCon, 
              if_exists='replace', 
              index=True, 
-             index_label='record_id',
-             schema='data_staging')
+             index_label='record_id')
 
 print 'OK--grant_output'
 
@@ -118,13 +109,11 @@ x_df1.to_sql(name = 'snsf_projects_abstracts',
              con = xDBCon,
              if_exists='replace',
              index=True,
-             index_label='record_id',
-             schema='data_staging')
+             index_label='record_id')
 
 print '--projects with abstracts'
 
-'''
-
 print '--- test end'
 
-print x_df1.head()
+
+
