@@ -72,7 +72,7 @@ print 'grants:', len(xdf_grant) , 'org:', len(xdf_org), 'pers:', len(xdf_pers)
 # !!!! DOES NOT WORK 
 # we just save a couple of recorsd to see 
 
-xdf_grant.head(2000).to_sql(name = 'grist_grants',
+xdf_grant.to_sql(name = 'grist_grants',
            con = xDBCon,
            if_exists='replace',
            index=True,
