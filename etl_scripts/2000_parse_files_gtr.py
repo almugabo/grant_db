@@ -37,14 +37,14 @@ print 'persons files:', len(xlst_data)
 
 xlst_dict_persons = []
 
-for xFileData in xlst_data[0:100]:
+for xFileData in xlst_data:
     xFileName = xFld_GTR_Data + xFileData
 
     xlst_dict_persons = xlst_dict_persons + GTR_PAR.gtr_parse_person(xFileName)
 
 print 'persons records:', len(xlst_dict_persons)
 
-x_df = pd.DataFrame(xlst_dict_persons[0:6])
+x_df = pd.DataFrame(xlst_dict_persons)
 
 x_df.to_sql(name = 'gtr_persons',
            con = xDBCon,
@@ -54,6 +54,94 @@ x_df.to_sql(name = 'gtr_persons',
            )
 
 print 'saved, persons', time.ctime()
+
+
+# projects 
+print '---start-- projects', time.ctime()
+
+# projects and links 
+
+xFld_Gtr_projects = xFld_GTR + '100_projects/'
+
+xlst_Files = os.listdir(xFld_Gtr_projects)
+
+
+# Results list 
+xlst_Res_proj = []
+xlst_Res_links = []
+
+for xFileName in xlst_Files:
+    xFile = xFld_Gtr_projects + xFileName
+    
+    xq1 = GTR_PAR.gtr_parse_projects(xFile)
+    
+    xlst_Res_proj = xlst_Res_proj + xq1['grant_data']
+    xlst_Res_links = xlst_Res_links + xq1['grant_links']
+
+xdf_proj = pd.DataFrame(xlst_Res_proj)
+xdf_proj.head()
+
+xdf_links = pd.DataFrame(xlst_Res_links )
+xdf_links.head()    
+
+# daving 
+
+print '----saving'
+
+xdf_proj.to_sql(name = 'gtr_projects',
+                con = xDBCon, 
+                if_exists='replace', 
+                index=True, index_label='record_id', 
+                chunksize=10000)
+print  'saved ! number_projects', len(xdf_proj)
+
+
+xdf_links.to_sql(name = 'gtr_links',
+                con = xDBCon, 
+                if_exists='replace', 
+                index=True, index_label='record_id', 
+                chunksize=10000)
+
+print  'number_links',    len(xdf_links)    
+
+print 'saved, projects', time.ctime()
+
+# Organisations 
+
+#GTR Organisations 
+
+print '---start-- Orgs', time.ctime()
+
+xlst_Res_orgs = []
+
+
+xFld_Gtr_orgs = xFld_GTR  + '200_orgs/'
+
+xlst_Files = os.listdir(xFld_Gtr_orgs )
+
+for xFileName in xlst_Files:
+    xFile = xFld_Gtr_orgs + xFileName
+    xq1 = GTR_PAR.gtr_parse_org(xFile)
+    
+    xlst_Res_orgs = xlst_Res_orgs + xq1 
+    
+  
+xdf_orgs = pd.DataFrame(xlst_Res_orgs)
+
+
+xdf_orgs.to_sql(name = 'gtr_orgs',
+                con = xDBCon, 
+                if_exists='replace', 
+                index=True, index_label='record_id', 
+                chunksize=10000)
+
+print  'saved ! orgs',    len(xdf_orgs)   ,  time.ctime()
+
+print 'ALL DONE'
+
+
+
+
 
 
 
